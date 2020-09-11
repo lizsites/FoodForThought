@@ -12,14 +12,11 @@ public class Runner {
 
 	public static void main(String[] args) {
 		
-		User u = new User("betty1","godzilla", 100, 500, Diet.Glutenfree);
+		User u = new User("betty1","destroyah", 100, 500, Diet.Glutenfree);
 		
 		UserDAO userDAO = new UserDAOImp();
-		
-		if (userDAO.addUser(u)) {
-			System.out.println("Success!");
-			System.out.println(u);
-		} else if (userDAO.updateUser(u)) {
+		u.setPassword("godzilla");
+	 if (userDAO.updateUser(u)) {
 			System.out.println("Updated!");
 			System.out.println(u);
 		} else {

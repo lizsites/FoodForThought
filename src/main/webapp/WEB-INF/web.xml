@@ -24,12 +24,12 @@
 	</filter-mapping>
 	
 	<servlet>
-		<display-name>MasterServlet</display-name>
-		<servlet-name>MasterServlet</servlet-name>
-		<servlet-class>com.revature.web.MasterServlet</servlet-class>
+		<display-name>TestServlet</display-name>
+		<servlet-name>TestServlet</servlet-name>
+		<servlet-class>com.revature.web.TestServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MasterServlet</servlet-name>
+		<servlet-name>TestServlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping> 
 </web-app>

@@ -15,4 +15,13 @@ public class LoginService {
 			return false;
 		}
 	}
+	
+	public boolean updateUser(User u) {
+		UserDAO userDAO = new UserDAOImp();
+		if (userDAO.updateUser(u)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

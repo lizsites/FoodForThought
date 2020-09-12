@@ -5,13 +5,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,24 +20,20 @@ public class Recipe {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="recipe_id")
-	int id;
+	private int id;
 
 	@Column(name="recipe_body")
-	String body;
+	private String body;
 	
 	@Column(name="recipe_cals")
-	int cals;
+	private int cals;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-	       name = "Recipe_Ingredient", 
-	       joinColumns = { @JoinColumn(name = "recipe_id") }, 
-	       inverseJoinColumns = { @JoinColumn(name = "ingredient_id") })
-	List<Ingredient> ingredients;
+	@OneToMany(mappedBy="recipe_id", cascade = CascadeType.ALL)
+	private List<RecipeIngredient> recipeIngredient;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id")
-	User owner;
+	private User owner;
 	
 	public Recipe(String title, String body, int cals) {
 		super();

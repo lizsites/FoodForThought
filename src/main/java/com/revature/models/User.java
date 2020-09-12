@@ -1,7 +1,7 @@
 package com.revature.models;
 
 import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -33,6 +33,12 @@ public class User {
 	
 	@Column(name="max_calories")
 	private int maxCalories;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.ALL)
+	private List<Recipe> recipes;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
+	private List<Picture> pictures;
 	
 	@Enumerated(EnumType.STRING)
 	private Diet diet;

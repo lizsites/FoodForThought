@@ -31,7 +31,7 @@ public class TestServlet extends HttpServlet {
 		break;
 		case  "user":
 			if (layeredUri.length==2) {
-				lc.login(req, res);
+				lc.updateUser(req, res);
 			}
 			break;
 		case "logout" :

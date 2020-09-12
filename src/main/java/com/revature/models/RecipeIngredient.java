@@ -36,6 +36,24 @@ public class RecipeIngredient {
 		this.amount = amount;
 	}
 
+	
+	
+	public RecipeIngredient(int id, Recipe recipe, Ingredient ingredient, String amount) {
+		super();
+		this.id = id;
+		this.recipe = recipe;
+		this.ingredient = ingredient;
+		this.amount = amount;
+	}
+
+
+
+	public RecipeIngredient() {
+		super();
+	}
+
+
+
 	public RecipeIngredient(String amount) {
 		super();
 		this.amount = amount;
@@ -64,4 +82,14 @@ public class RecipeIngredient {
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "RecipeIngredient [id=" + id + ", ingredient=" + ingredient + ", amount=" + amount
+				+ "]";
+	}
+	
+	
 }

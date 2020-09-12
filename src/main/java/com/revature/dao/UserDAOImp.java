@@ -42,5 +42,16 @@ public class UserDAOImp implements UserDAO {
 			sess.close();
 		}
 	}
+	
+	@Override
+	public User getUserById(int id) {
+		Session sess = HibernateUtil.getSession();
+		try {
+			return sess.get(User.class, id);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }

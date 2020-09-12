@@ -1,5 +1,7 @@
 package com.revature.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -49,6 +51,19 @@ public class UserDAOImp implements UserDAO {
 		try {
 			return sess.get(User.class, id);
 		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public User getUserByUsername(String username) {
+		Session sess = HibernateUtil.getSession();
+		try {
+			List<User> u;
+			u = sess.createQuery("FROM users WHERE username = '"+username + "'").list();
+			return u.get(0);
+		}catch (HibernateException e) {
 			e.printStackTrace();
 			return null;
 		}

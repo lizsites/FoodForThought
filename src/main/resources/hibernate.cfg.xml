@@ -21,6 +21,7 @@
 		<mapping class="com.revature.models.Recipe"/>
 		<mapping class="com.revature.models.Picture"/>
 		<mapping class="com.revature.models.Ingredient"/>
+		<mapping class="com.revature.models.RecipeIngredient"/>
 	</session-factory>
 	
 

@@ -23,8 +23,14 @@ public class User {
 	
 	@Column(name="password")
 	private String password;
+
+	@Column(name="min_calories")
+	private int minCalories;
 	
-	@Enumerated(EnumType.ORDINAL)
+	@Column(name="max_calories")
+	private int maxCalories;
+	
+	@Enumerated(EnumType.STRING)
 	private Diet diet;
 
 	public User(int id, String username, String password, int minCalories, int maxCalories, Diet diet) {
@@ -33,18 +39,16 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.minCalories = minCalories;
-		MaxCalories = maxCalories;
+		this.maxCalories = maxCalories;
 		this.diet = diet;
-	}
-	
-	
+	}	
 
 	public User(String username, String password, int minCalories, int maxCalories, Diet diet) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.minCalories = minCalories;
-		MaxCalories = maxCalories;
+		this.maxCalories = maxCalories;
 		this.diet = diet;
 	}
 
@@ -63,13 +67,6 @@ public class User {
 		this.password = password;
 	}
 
-	@Column(name="min_calories")
-	private int minCalories;
-	
-	@Column(name="max_calories")
-	private int MaxCalories;
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -95,11 +92,11 @@ public class User {
 	}
 
 	public int getMaxCalories() {
-		return MaxCalories;
+		return maxCalories;
 	}
 
 	public void setMaxCalories(int maxCalories) {
-		MaxCalories = maxCalories;
+		this.maxCalories = maxCalories;
 	}
 
 	public Diet getDiet() {
@@ -113,20 +110,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", minCalories=" + minCalories
-				+ ", MaxCalories=" + MaxCalories + ", diet=" + diet + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + MaxCalories;
-		result = prime * result + ((diet == null) ? 0 : diet.hashCode());
-		result = prime * result + id;
-		result = prime * result + minCalories;
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
+				+ ", MaxCalories=" + maxCalories + ", diet=" + diet + "]";
 	}
 
 	@Override
@@ -138,7 +122,7 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (MaxCalories != other.MaxCalories)
+		if (this.maxCalories != other.maxCalories)
 			return false;
 		if (diet != other.diet)
 			return false;

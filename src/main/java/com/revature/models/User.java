@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,11 +35,11 @@ public class User {
 	@Column(name="max_calories")
 	private int maxCalories;
 	
-	@OneToMany(mappedBy="owner", cascade = CascadeType.ALL)
-	List<Recipe> recipes;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.ALL)
+	private List<Recipe> recipes;
 	
-	@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-	List<Picture> pictures;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
+	private List<Picture> pictures;
 	
 	@Enumerated(EnumType.STRING)
 	private Diet diet;

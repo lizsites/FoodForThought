@@ -1,5 +1,7 @@
 package com.revature.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,13 +15,15 @@ public class UserDAOImp implements UserDAO {
 	public boolean addUser(User u) {
 		Session sess = HibernateUtil.getSession();
 		Transaction tx;
+
+		tx = sess.beginTransaction();
 		try {
-			tx = sess.beginTransaction();
 			sess.save(u);
 			tx.commit();
 			return true;
 		} catch (HibernateException e) {
 			e.printStackTrace();
+			tx.rollback();
 			return false;
 		} finally {
 			sess.close();
@@ -30,13 +34,15 @@ public class UserDAOImp implements UserDAO {
 	public boolean updateUser(User u) {
 		Session sess = HibernateUtil.getSession();
 		Transaction tx;
+		tx = sess.beginTransaction();
 		try {
-			tx = sess.beginTransaction();
+			
 			sess.merge(u);
 			tx.commit();
 			return true;
 		} catch (HibernateException e) {
 			e.printStackTrace();
+			tx.rollback();
 			return false;
 		} finally {
 			sess.close();
@@ -49,6 +55,19 @@ public class UserDAOImp implements UserDAO {
 		try {
 			return sess.get(User.class, id);
 		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public User getUserByUsername(String username) {
+		Session sess = HibernateUtil.getSession();
+		try {
+			List<User> u;
+			u = sess.createQuery("FROM users WHERE username = '"+username + "'").list();
+			return u.get(0);
+		}catch (HibernateException e) {
 			e.printStackTrace();
 			return null;
 		}

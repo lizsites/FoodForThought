@@ -1,12 +1,16 @@
 package com.revature.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,7 +36,9 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private Diet diet;
-
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	List<Picture> pictures;
 	public User(int id, String username, String password, int minCalories, int maxCalories, Diet diet) {
 		super();
 		this.id = id;

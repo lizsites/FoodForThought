@@ -8,7 +8,7 @@ public class LoginService {
 	
 	public boolean login(User u) {
 		UserDAO userDAO = new UserDAOImp();
-		User f = userDAO.getUserById(u.getId());
+		User f = userDAO.getUserByUsername(u.getUsername());
 		if (f.getPassword().equals(u.getPassword())) {
 			return true;
 		} else {

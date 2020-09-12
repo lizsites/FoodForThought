@@ -41,11 +41,37 @@ public class LoginController {
 			HttpSession sesh = req.getSession();
 			sesh.setAttribute("user", u);
 			sesh.setAttribute("loggedin" , true);
-			res.getWriter().println("login successful");
+			res.getWriter().println(u);
 			res.setStatus(200);
 			
 	}
 }
 	
+
+	public void logout(HttpServletRequest req, HttpServletResponse res) throws IOException{
+		HttpSession sess = req.getSession(false);
+		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
+			sess.invalidate();
+			res.setStatus(201);
+		} else {
+			res.setStatus(403);
+			res.getWriter().println("You must be logged in to log out");
+		}
+	}
 	
+	public void updateUser(HttpServletRequest req, HttpServletResponse res, int id) throws IOException{
+		HttpSession sess = req.getSession(false);
+		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
+			User u = (User)req.getAttribute("user");
+			LoginService ls = new LoginService();
+			if (ls.updateUser(u)) {
+				res.setStatus(200);
+				res.getWriter().println(u);
+			} else {
+				res.setStatus(403);
+				res.getWriter().println("user could not be updated");
+			}
+		}
+	}
+
 }

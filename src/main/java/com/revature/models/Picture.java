@@ -24,7 +24,6 @@ public class Picture {
 	@Column(name="picture")
 	Blob picture;
 	
-	@Column(name="user_fk")
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	User user;

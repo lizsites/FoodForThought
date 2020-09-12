@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,10 +30,14 @@ public class Recipe {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
-	       name = "Employee_Project", 
-	       joinColumns = { @JoinColumn(name = "employee_id") }, 
-	       inverseJoinColumns = { @JoinColumn(name = "project_id") })
+	       name = "Recipe_Ingredient", 
+	       joinColumns = { @JoinColumn(name = "recipe_id") }, 
+	       inverseJoinColumns = { @JoinColumn(name = "ingredient_id") })
 	List<Ingredient> ingredients;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	User owner;
 	
 	public Recipe(String title, String body, int cals) {
 		super();

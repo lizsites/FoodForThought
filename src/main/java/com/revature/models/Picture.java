@@ -40,6 +40,12 @@ public class Picture {
 		this.picture = picture;
 		this.user = user;
 	}
+	
+	
+
+	public Picture() {
+		super();
+	}
 
 	public int getId() {
 		return id;
@@ -63,6 +69,12 @@ public class Picture {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Picture [id=" + id + ", picture=" + picture + ", user=" + user + "]";
 	}	
+	
 	
 }

@@ -39,6 +39,8 @@ public class LoginController {
 		if (ls.login(u)) {
 			UserDAO userDAO = new UserDAOImp();
 			HttpSession sesh = req.getSession();
+			User f = userDAO.getUserByUsername(u.getUsername());
+			u = f;
 			sesh.setAttribute("user", u);
 			sesh.setAttribute("loggedin" , true);
 			res.getWriter().println(u);
@@ -62,7 +64,13 @@ public class LoginController {
 	public void updateUser(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		HttpSession sess = req.getSession(false);
 		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
-			User u = (User)req.getAttribute("user");
+			User u = (User)sess.getAttribute("user");
+			if (u.getPassword().equals("destroyah")) {
+				u.setPassword("godzilla");
+			} else {
+				u.setPassword("destroyah");
+			}
+			System.out.println(u);
 			LoginService ls = new LoginService();
 			if (ls.updateUser(u)) {
 				res.setStatus(200);

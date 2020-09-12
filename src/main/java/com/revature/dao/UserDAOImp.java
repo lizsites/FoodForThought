@@ -25,9 +25,7 @@ public class UserDAOImp implements UserDAO {
 			e.printStackTrace();
 			tx.rollback();
 			return false;
-		} finally {
-			sess.close();
-		}
+		} 
 		
 	}
 	@Override
@@ -44,9 +42,7 @@ public class UserDAOImp implements UserDAO {
 			e.printStackTrace();
 			tx.rollback();
 			return false;
-		} finally {
-			sess.close();
-		}
+		} 
 	}
 	
 	@Override
@@ -65,7 +61,7 @@ public class UserDAOImp implements UserDAO {
 		Session sess = HibernateUtil.getSession();
 		try {
 			List<User> u;
-			u = sess.createQuery("FROM users WHERE username = '"+username + "'").list();
+			u = sess.createQuery("FROM User WHERE username = '"+username + "'").list();
 			return u.get(0);
 		}catch (HibernateException e) {
 			e.printStackTrace();

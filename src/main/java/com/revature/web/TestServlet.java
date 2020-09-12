@@ -19,7 +19,7 @@ public class TestServlet extends HttpServlet {
 		res.setStatus(404);
 		
 		
-		final String uri = req.getRequestURI().replace("/project1/", "");
+		final String uri = req.getRequestURI().replace("/JenkinsRepo/", "");
 		String[] layeredUri = uri.split("/");
 		System.out.println(Arrays.toString(layeredUri));
 		
@@ -31,4 +31,8 @@ public class TestServlet extends HttpServlet {
 		}
 	}
 	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	doGet(req, res);
+	}
 }

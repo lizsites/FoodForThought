@@ -18,7 +18,10 @@
 		<property name="hibernate.event.merge.entity_copy_observer">allow</property>
 		
 		<mapping class="com.revature.models.User"/>
-		
+		<mapping class="com.revature.models.Recipe"/>
+		<mapping class="com.revature.models.Picture"/>
+		<mapping class="com.revature.models.Ingredient"/>
+		<mapping class="com.revature.models.RecipeIngredient"/>
 	</session-factory>
 	
 

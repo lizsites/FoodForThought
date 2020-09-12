@@ -47,6 +47,7 @@ public class LoginController {
 	}
 }
 	
+
 	public void logout(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		HttpSession sess = req.getSession(false);
 		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
@@ -72,4 +73,5 @@ public class LoginController {
 			}
 		}
 	}
+
 }

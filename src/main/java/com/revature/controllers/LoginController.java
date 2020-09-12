@@ -58,7 +58,7 @@ public class LoginController {
 		}
 	}
 	
-	public void updateUser(HttpServletRequest req, HttpServletResponse res, int id) throws IOException{
+	public void updateUser(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		HttpSession sess = req.getSession(false);
 		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
 			User u = (User)req.getAttribute("user");

@@ -1,10 +1,12 @@
 package com.revature.controllers;
 
-import java.io.BufferedReader;
+import java.io.BufferedReader; 
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +36,7 @@ public class LoginController {
 		if (ls.login(u)) {
 			
 		}
-		
+
 		
 	}
 }

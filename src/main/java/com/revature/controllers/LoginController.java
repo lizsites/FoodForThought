@@ -35,15 +35,19 @@ public class LoginController {
 
 		String body = new String(sb);
 		User u = om.readValue(body, User.class);
-
+		System.out.println("login controllers u" + u);
 		if (ls.login(u)) {
+			
 			UserDAO userDAO = new UserDAOImp();
 			HttpSession sesh = req.getSession();
 			User f = userDAO.getUserByUsername(u.getUsername());
 			u = f;
 			sesh.setAttribute("user", u);
 			sesh.setAttribute("loggedin" , true);
-			res.getWriter().println(u);
+			String jsonU = om.writeValueAsString(u);
+			
+			res.getWriter().println(jsonU);
+			
 			res.setStatus(200);
 			
 	}

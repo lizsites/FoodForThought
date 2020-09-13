@@ -30,8 +30,10 @@ public class TestServlet extends HttpServlet {
 			} 
 		break;
 		case  "user":
-			if (layeredUri.length==2) {
+			if (req.getMethod().equals("PATCH")) {
 				lc.updateUser(req, res);
+			} else if (req.getMethod().equals("POST")) {
+				//put lc.addUser(req,res) here!
 			}
 			break;
 		case "logout" :

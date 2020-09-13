@@ -26,14 +26,14 @@ public class TestServlet extends HttpServlet {
 		switch(layeredUri[0]) {
 		case "login" :
 			if (req.getMethod().equals("POST")) {
-			lc.login(req,res);
+				lc.login(req,res);
 			} 
 		break;
 		case  "user":
 			if (req.getMethod().equals("PATCH")) {
 				lc.updateUser(req, res);
 			} else if (req.getMethod().equals("POST")) {
-				//put lc.addUser(req,res) here!
+				lc.addUser(req, res);
 			}
 			break;
 		case "logout" :

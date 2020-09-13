@@ -18,10 +18,11 @@ public class LoginService {
 	
 	public boolean updateUser(User u) {
 		UserDAO userDAO = new UserDAOImp();
-		if (userDAO.updateUser(u)) {
-			return true;
-		} else {
-			return false;
-		}
+		return userDAO.updateUser(u);
+	}
+
+	public boolean register(User u) {
+		UserDAO uDao = new UserDAOImp();
+		return uDao.addUser(u);
 	}
 }

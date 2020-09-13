@@ -35,15 +35,19 @@ public class LoginController {
 
 		String body = new String(sb);
 		User u = om.readValue(body, User.class);
-
+		
 		if (ls.login(u)) {
+			
 			UserDAO userDAO = new UserDAOImp();
 			HttpSession sesh = req.getSession();
 			User f = userDAO.getUserByUsername(u.getUsername());
 			u = f;
 			sesh.setAttribute("user", u);
 			sesh.setAttribute("loggedin" , true);
-			res.getWriter().println(u);
+			String jsonU = om.writeValueAsString(u);
+			
+			res.getWriter().println(jsonU);
+			
 			res.setStatus(200);
 			
 	}
@@ -65,11 +69,6 @@ public class LoginController {
 		HttpSession sess = req.getSession(false);
 		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
 			User u = (User)sess.getAttribute("user");
-			if (u.getPassword().equals("destroyah")) {
-				u.setPassword("godzilla");
-			} else {
-				u.setPassword("destroyah");
-			}
 			System.out.println(u);
 			LoginService ls = new LoginService();
 			if (ls.updateUser(u)) {

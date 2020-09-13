@@ -35,7 +35,7 @@ public class LoginController {
 
 		String body = new String(sb);
 		User u = om.readValue(body, User.class);
-		System.out.println("login controllers u" + u);
+		
 		if (ls.login(u)) {
 			
 			UserDAO userDAO = new UserDAOImp();
@@ -69,11 +69,6 @@ public class LoginController {
 		HttpSession sess = req.getSession(false);
 		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
 			User u = (User)sess.getAttribute("user");
-			if (u.getPassword().equals("destroyah")) {
-				u.setPassword("godzilla");
-			} else {
-				u.setPassword("destroyah");
-			}
 			System.out.println(u);
 			LoginService ls = new LoginService();
 			if (ls.updateUser(u)) {

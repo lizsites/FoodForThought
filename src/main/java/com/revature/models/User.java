@@ -14,38 +14,43 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
+//	public enum UserDiet {
+//        GLUTEN_FREE,
+//        VEGAN, 
+//		  VEGETARIAN, 
+//etc. add the rest of the diets here
+//
+//    }
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int id;
-	
-	@Column(name="user_name" , unique = true)
+
+	@Column(name = "user_name", unique = true)
 	private String username;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
 
-	@Column(name="min_calories")
+	@Column(name = "min_calories")
 	private int minCalories;
-	
-	@Column(name="max_calories")
-	private int maxCalories;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.ALL)
-	private List<Recipe> recipes;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
-	private List<Picture> pictures;
-	
-	@Enumerated(EnumType.STRING)
-	private Diet diet;
-	
-	
-	
 
+	@Column(name = "max_calories")
+	private int maxCalories;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade = CascadeType.ALL)
+	private List<Recipe> recipes;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Picture> pictures;
+
+	@Enumerated(EnumType.STRING)
+	// @Column(name="user_diet", nullable=false)
+	private Diet diet;
 
 	public User(int id, String username, String password, int minCalories, int maxCalories, List<Recipe> recipes,
 			List<Picture> pictures, Diet diet) {
@@ -60,8 +65,6 @@ public class User {
 		this.diet = diet;
 	}
 
-
-
 	public User(String username, String password, int minCalories, int maxCalories, List<Recipe> recipes,
 			List<Picture> pictures, Diet diet) {
 		super();
@@ -73,8 +76,6 @@ public class User {
 		this.pictures = pictures;
 		this.diet = diet;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -90,8 +91,6 @@ public class User {
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -133,46 +132,31 @@ public class User {
 		return true;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", minCalories=" + minCalories
-				+ ", maxCalories=" + maxCalories + ", recipes=" + recipes +  ", diet=" + diet
-				+ "]";
+				+ ", maxCalories=" + maxCalories + ", recipes=" + recipes + ", diet=" + diet + "]";
 	}
-
-
 
 	public List<Recipe> getRecipes() {
 		return recipes;
 	}
 
-
-
 	public void setRecipes(List<Recipe> recipes) {
 		this.recipes = recipes;
 	}
-
-
 
 	public List<Picture> getPictures() {
 		return pictures;
 	}
 
-
-
 	public void setPictures(List<Picture> pictures) {
 		this.pictures = pictures;
 	}
 
-
-
 	public User() {
 		super();
 	}
-
-
 
 	public String getPassword() {
 		return password;
@@ -221,6 +205,5 @@ public class User {
 	public void setDiet(Diet diet) {
 		this.diet = diet;
 	}
-	
-	
+
 }

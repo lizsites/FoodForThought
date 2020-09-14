@@ -68,9 +68,28 @@ public class LoginController {
 	public void updateUser(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		HttpSession sess = req.getSession(false);
 		if (sess != null && (boolean)sess.getAttribute("loggedin")) {
-			User u = (User)sess.getAttribute("user");
-			System.out.println(u);
+			ObjectMapper om = new ObjectMapper();
 			LoginService ls = new LoginService();
+			BufferedReader reader = req.getReader();
+
+			StringBuilder sb = new StringBuilder();
+
+			String line = reader.readLine();
+
+			while (line != null) {
+				sb.append(line);
+				line = reader.readLine();
+			}
+
+			String body = new String(sb);
+			User newU = om.readValue(body, User.class);
+			System.out.println("user info to be updated : " +newU);
+			User u = (User)sess.getAttribute("user");
+			System.out.println("user info from session : " + u);
+			u.setPassword(newU.getPassword());
+			u.setDiet(newU.getDiet());
+			u.setMinCalories(newU.getMinCalories());
+			u.setMaxCalories(newU.getMaxCalories());
 			if (ls.updateUser(u)) {
 				res.setStatus(200);
 				res.getWriter().println(u);

@@ -29,8 +29,9 @@ public class TestServlet extends HttpServlet {
 			lc.login(req,res);
 			} 
 		break;
-		case  "user":
-			if (req.getMethod().equals("PATCH")) {
+		case  "update":
+			if (req.getMethod().equals("POST")) {
+				System.out.println("IN USER POST CASE");
 				lc.updateUser(req, res);
 			} else if (req.getMethod().equals("POST")) {
 				//put lc.addUser(req,res) here!

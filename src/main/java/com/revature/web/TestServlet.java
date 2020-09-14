@@ -26,7 +26,7 @@ public class TestServlet extends HttpServlet {
 		switch(layeredUri[0]) {
 		case "login" :
 			if (req.getMethod().equals("POST")) {
-			lc.login(req,res);
+				lc.login(req,res);
 			} 
 		break;
 		case  "update":
@@ -34,7 +34,7 @@ public class TestServlet extends HttpServlet {
 				System.out.println("IN USER POST CASE");
 				lc.updateUser(req, res);
 			} else if (req.getMethod().equals("POST")) {
-				//put lc.addUser(req,res) here!
+				lc.addUser(req, res);
 			}
 			break;
 		case "logout" :

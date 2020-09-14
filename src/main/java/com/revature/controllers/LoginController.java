@@ -99,5 +99,36 @@ public class LoginController {
 			}
 		}
 	}
+	public void addUser(HttpServletRequest req, HttpServletResponse res) throws IOException{
+		ObjectMapper om = new ObjectMapper();
+		LoginService ls = new LoginService();
+		BufferedReader reader = req.getReader();
+
+		StringBuilder sb = new StringBuilder();
+
+		String line = reader.readLine();
+
+		while (line != null) {
+			sb.append(line);
+			line = reader.readLine();
+		}
+
+		String body = new String(sb);
+		System.out.println(body);
+		User u = om.readValue(body, User.class);
+		if (ls.register(u)) {
+			
+			HttpSession sesh = req.getSession();
+			sesh.setAttribute("user", u);
+			sesh.setAttribute("loggedin" , true);
+			String jsonU = om.writeValueAsString(u);
+
+			res.getWriter().println(jsonU);
+
+			res.setStatus(200);
+
+		}
+	}
+
 
 }

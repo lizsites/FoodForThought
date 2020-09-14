@@ -17,13 +17,9 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {
 
-//	public enum UserDiet {
-//        GLUTEN_FREE,
-//        VEGAN, 
-//		  VEGETARIAN, 
-//etc. add the rest of the diets here
-//
-//    }
+	public enum Diet {
+		GLUTEN_FREE, VEGAN, VEGETARIAN, LACTO_VEGETARIAN, KETOGENIC, OVO_VEGETARIAN, PESCETARIAN, PALEO, PRIMAL, WHOLE30
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,8 +45,12 @@ public class User {
 	private List<Picture> pictures;
 
 	@Enumerated(EnumType.STRING)
-	// @Column(name="user_diet", nullable=false)
+	@Column(name="user_diet")
 	private Diet diet;
+
+	public User() {
+		super();
+	}
 
 	public User(int id, String username, String password, int minCalories, int maxCalories, List<Recipe> recipes,
 			List<Picture> pictures, Diet diet) {
@@ -74,6 +74,70 @@ public class User {
 		this.maxCalories = maxCalories;
 		this.recipes = recipes;
 		this.pictures = pictures;
+		this.diet = diet;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getMinCalories() {
+		return minCalories;
+	}
+
+	public void setMinCalories(int minCalories) {
+		this.minCalories = minCalories;
+	}
+
+	public int getMaxCalories() {
+		return maxCalories;
+	}
+
+	public void setMaxCalories(int maxCalories) {
+		this.maxCalories = maxCalories;
+	}
+
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
+
+	public List<Picture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
+	}
+
+	public Diet getDiet() {
+		return diet;
+	}
+
+	public void setDiet(Diet diet) {
 		this.diet = diet;
 	}
 
@@ -135,75 +199,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", minCalories=" + minCalories
-				+ ", maxCalories=" + maxCalories + ", recipes=" + recipes + ", diet=" + diet + "]";
+				+ ", maxCalories=" + maxCalories + ", recipes=" + recipes + ", pictures=" + pictures + ", diet=" + diet
+				+ "]";
 	}
-
-	public List<Recipe> getRecipes() {
-		return recipes;
-	}
-
-	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
-	}
-
-	public List<Picture> getPictures() {
-		return pictures;
-	}
-
-	public void setPictures(List<Picture> pictures) {
-		this.pictures = pictures;
-	}
-
-	public User() {
-		super();
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public int getMinCalories() {
-		return minCalories;
-	}
-
-	public void setMinCalories(int minCalories) {
-		this.minCalories = minCalories;
-	}
-
-	public int getMaxCalories() {
-		return maxCalories;
-	}
-
-	public void setMaxCalories(int maxCalories) {
-		this.maxCalories = maxCalories;
-	}
-
-	public Diet getDiet() {
-		return diet;
-	}
-
-	public void setDiet(Diet diet) {
-		this.diet = diet;
-	}
-
 }

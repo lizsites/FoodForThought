@@ -1,7 +1,7 @@
 package com.revature.models;
 
 import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,63 +14,67 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
+	public enum Diet {
+		GLUTEN_FREE, VEGAN, VEGETARIAN, LACTO_VEGETARIAN, KETOGENIC, OVO_VEGETARIAN, PESCETARIAN, PALEO, PRIMAL, WHOLE30
+	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int id;
-	
-	@Column(name="user_name" , unique = true)
+
+	@Column(name = "user_name", unique = true)
 	private String username;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
 
-	@Column(name="min_calories")
+	@Column(name = "min_calories")
 	private int minCalories;
-	
-	@Column(name="max_calories")
+
+	@Column(name = "max_calories")
 	private int maxCalories;
-	
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade = CascadeType.ALL)
+	private List<Recipe> recipes;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Picture> pictures;
+
 	@Enumerated(EnumType.STRING)
+	@Column(name="user_diet")
 	private Diet diet;
-	
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
-	List<Picture> pictures;
-	public User(int id, String username, String password, int minCalories, int maxCalories, Diet diet) {
+
+	public User() {
+		super();
+	}
+
+	public User(int id, String username, String password, int minCalories, int maxCalories, List<Recipe> recipes,
+			List<Picture> pictures, Diet diet) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.minCalories = minCalories;
 		this.maxCalories = maxCalories;
+		this.recipes = recipes;
+		this.pictures = pictures;
 		this.diet = diet;
-	}	
+	}
 
-	public User(String username, String password, int minCalories, int maxCalories, Diet diet) {
+	public User(String username, String password, int minCalories, int maxCalories, List<Recipe> recipes,
+			List<Picture> pictures, Diet diet) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.minCalories = minCalories;
 		this.maxCalories = maxCalories;
+		this.recipes = recipes;
+		this.pictures = pictures;
 		this.diet = diet;
-	}
-
-
-	public User() {
-		super();
-	}
-
-
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public int getId() {
@@ -89,6 +93,14 @@ public class User {
 		this.username = username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public int getMinCalories() {
 		return minCalories;
 	}
@@ -105,6 +117,22 @@ public class User {
 		this.maxCalories = maxCalories;
 	}
 
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
+
+	public List<Picture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
+	}
+
 	public Diet getDiet() {
 		return diet;
 	}
@@ -112,11 +140,20 @@ public class User {
 	public void setDiet(Diet diet) {
 		this.diet = diet;
 	}
-	
+
 	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", minCalories=" + minCalories
-				+ ", MaxCalories=" + maxCalories + ", diet=" + diet + "]";
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((diet == null) ? 0 : diet.hashCode());
+		result = prime * result + id;
+		result = prime * result + maxCalories;
+		result = prime * result + minCalories;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((pictures == null) ? 0 : pictures.hashCode());
+		result = prime * result + ((recipes == null) ? 0 : recipes.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
 	}
 
 	@Override
@@ -128,11 +165,11 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (this.maxCalories != other.maxCalories)
-			return false;
 		if (diet != other.diet)
 			return false;
 		if (id != other.id)
+			return false;
+		if (maxCalories != other.maxCalories)
 			return false;
 		if (minCalories != other.minCalories)
 			return false;
@@ -141,6 +178,16 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (pictures == null) {
+			if (other.pictures != null)
+				return false;
+		} else if (!pictures.equals(other.pictures))
+			return false;
+		if (recipes == null) {
+			if (other.recipes != null)
+				return false;
+		} else if (!recipes.equals(other.recipes))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -148,5 +195,11 @@ public class User {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", minCalories=" + minCalories
+				+ ", maxCalories=" + maxCalories + ", recipes=" + recipes + ", pictures=" + pictures + ", diet=" + diet
+				+ "]";
+	}
 }

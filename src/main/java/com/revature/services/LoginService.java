@@ -15,4 +15,14 @@ public class LoginService {
 			return false;
 		}
 	}
+	
+	public boolean updateUser(User u) {
+		UserDAO userDAO = new UserDAOImp();
+		return userDAO.updateUser(u);
+	}
+
+	public boolean register(User u) {
+		UserDAO uDao = new UserDAOImp();
+		return uDao.addUser(u);
+	}
 }

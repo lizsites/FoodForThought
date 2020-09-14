@@ -19,15 +19,14 @@ public class Picture {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="picture_id")
-	int id;
+	private int id;
 	
 	@Column(name="picture")
-	Blob picture;
+	private Blob picture;
 	
-	@Column(name="user_fk")
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
-	User user;
+	private User user;
 
 	public Picture(int id, Blob picture, User user) {
 		super();
@@ -40,6 +39,12 @@ public class Picture {
 		super();
 		this.picture = picture;
 		this.user = user;
+	}
+	
+	
+
+	public Picture() {
+		super();
 	}
 
 	public int getId() {
@@ -64,6 +69,12 @@ public class Picture {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Picture [id=" + id + ", picture=" + picture + ", user=" + user + "]";
 	}	
+	
 	
 }

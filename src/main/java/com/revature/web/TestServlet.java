@@ -12,7 +12,7 @@ import com.revature.controllers.LoginController;
 
 
 public class TestServlet extends HttpServlet {
-	
+	private static final LoginController lc = new LoginController();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json");
@@ -25,9 +25,19 @@ public class TestServlet extends HttpServlet {
 		
 		switch(layeredUri[0]) {
 		case "login" :
-			LoginController lc = new LoginController();
-			lc.login(req,res);
+			if (req.getMethod().equals("POST")) {
+				lc.login(req,res);
+			} 
 		break;
+		case  "user":
+			if (req.getMethod().equals("PATCH")) {
+				lc.updateUser(req, res);
+			} else if (req.getMethod().equals("POST")) {
+				lc.addUser(req, res);
+			}
+			break;
+		case "logout" :
+			lc.logout(req,res);
 		}
 	}
 	

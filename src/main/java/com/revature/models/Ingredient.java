@@ -2,12 +2,13 @@ package com.revature.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,36 +17,41 @@ public class Ingredient {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ingredient_id")
-	int id;
+	private int id;
 	@Column(name="ingredient_name")
-	String name;
+	private String name;
 	
 	@Column(name="ingredient_protein")
-	double protein;
+	private double protein;
 	
 	@Column(name="ingredient_cals")
-	int cals;
+	private int cals;
 	
-	@ManyToMany(mappedBy = "ingredients")
-	List<Recipe> recipes;
-
-	public Ingredient(int id, String name, double protein, int cals, List<Recipe> recipes) {
+	@OneToMany(mappedBy="ingredient", cascade = CascadeType.ALL)
+	private List<RecipeIngredient> recipeIngredient;
+	
+	public Ingredient(int id, String name, double protein, int cals, List<RecipeIngredient> recipeIngredient) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.protein = protein;
 		this.cals = cals;
-		this.recipes = recipes;
+		this.recipeIngredient = recipeIngredient;
 	}
 
-	public Ingredient(String name, double protein, int cals, List<Recipe> recipes) {
+	public Ingredient(String name, double protein, int cals, List<RecipeIngredient> recipeIngredient) {
 		super();
 		this.name = name;
 		this.protein = protein;
 		this.cals = cals;
-		this.recipes = recipes;
+		this.recipeIngredient = recipeIngredient;
 	}
+
 	
+	public Ingredient() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -77,13 +83,21 @@ public class Ingredient {
 	public void setCals(int cals) {
 		this.cals = cals;
 	}
-
-	public List<Recipe> getRecipes() {
-		return recipes;
+	
+	public List<RecipeIngredient> getRecipeIngredient() {
+		return recipeIngredient;
 	}
 
-	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
+	public void setRecipeIngredient(List<RecipeIngredient> recipeIngredient) {
+		this.recipeIngredient = recipeIngredient;
 	}
+
+	@Override
+	public String toString() {
+		return "Ingredient [id=" + id + ", name=" + name + ", protein=" + protein + ", cals=" + cals
+				+ "]";
+	}
+	
+	
 
 }

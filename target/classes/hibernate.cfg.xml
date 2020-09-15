@@ -18,6 +18,7 @@
 		<property name="hibernate.event.merge.entity_copy_observer">allow</property>
 		
 		<mapping class="com.revature.models.User"/>
+	
 		
 	</session-factory>
 	

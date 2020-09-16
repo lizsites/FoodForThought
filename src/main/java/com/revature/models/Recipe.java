@@ -28,6 +28,9 @@ public class Recipe {
 	@Column(name="recipe_cals")
 	private int cals;
 	
+	@Column(name="recipe_title", nullable=false)
+	String title;
+	
 	@OneToMany(mappedBy="recipe", cascade = CascadeType.ALL)
 	private List<RecipeIngredient> recipeIngredient;
 	
@@ -74,9 +77,6 @@ public class Recipe {
 			return false;
 		return true;
 	}
-
-	@Column(name="recipe_title", nullable=false)
-	String title;
 	
 	public int getId() {
 		return id;

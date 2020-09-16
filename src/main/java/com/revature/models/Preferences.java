@@ -27,7 +27,7 @@ public class Preferences {
 	@Column(name = "max_calories")
 	private int maxCalories;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "preference", cascade = CascadeType.ALL)
 	private List<User> users;
 
 	public Preferences() {

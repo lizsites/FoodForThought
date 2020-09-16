@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,7 +22,9 @@ public class Picture {
 	@Column(name="picture_id")
 	private int id;
 	
-	@Column(name="picture")
+	@Lob
+	@Type(type = "org.hibernate.type.BinaryType")
+	@Column(name = "picture")
 	private Blob picture;
 	
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
@@ -41,8 +44,6 @@ public class Picture {
 		this.user = user;
 	}
 	
-	
-
 	public Picture() {
 		super();
 	}

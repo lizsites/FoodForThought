@@ -21,28 +21,23 @@ public class Ingredient {
 	@Column(name="ingredient_name")
 	private String name;
 	
-	@Column(name="ingredient_protein")
-	private double protein;
-	
 	@Column(name="ingredient_cals")
 	private int cals;
 	
 	@OneToMany(mappedBy="ingredient", cascade = CascadeType.ALL)
 	private List<RecipeIngredient> recipeIngredient;
 	
-	public Ingredient(int id, String name, double protein, int cals, List<RecipeIngredient> recipeIngredient) {
+	public Ingredient(int id, String name, int cals, List<RecipeIngredient> recipeIngredient) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.protein = protein;
 		this.cals = cals;
 		this.recipeIngredient = recipeIngredient;
 	}
 
-	public Ingredient(String name, double protein, int cals, List<RecipeIngredient> recipeIngredient) {
+	public Ingredient(String name, int cals, List<RecipeIngredient> recipeIngredient) {
 		super();
 		this.name = name;
-		this.protein = protein;
 		this.cals = cals;
 		this.recipeIngredient = recipeIngredient;
 	}
@@ -68,14 +63,6 @@ public class Ingredient {
 		this.name = name;
 	}
 
-	public double getProtein() {
-		return protein;
-	}
-
-	public void setProtein(double protein) {
-		this.protein = protein;
-	}
-
 	public int getCals() {
 		return cals;
 	}
@@ -94,7 +81,7 @@ public class Ingredient {
 
 	@Override
 	public String toString() {
-		return "Ingredient [id=" + id + ", name=" + name + ", protein=" + protein + ", cals=" + cals
+		return "Ingredient [id=" + id + ", name=" + name + ", cals=" + cals
 				+ "]";
 	}
 	

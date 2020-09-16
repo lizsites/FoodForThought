@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -24,6 +26,10 @@ public class Preferences {
 
 	@Column(name = "max_calories")
 	private int maxCalories;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	//dont need a join table bc its okay for one preference to be associated with multiple employees?
+	private List<User> users;
 
 	public Preferences() {
 		super();

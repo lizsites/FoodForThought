@@ -9,6 +9,11 @@ public class Preferences {
 	public enum DietType {
 		GLUTEN_FREE, VEGAN, VEGETARIAN, LACTO_VEGETARIAN, KETOGENIC, OVO_VEGETARIAN, PESCETARIAN, PALEO, PRIMAL, WHOLE30
 	}
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="preference_id")
+	private int id;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "user_diet")
@@ -19,21 +24,24 @@ public class Preferences {
 
 	@Column(name = "max_calories")
 	private int maxCalories;
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private User user;
 
 	public Preferences() {
 		super();
 	}
 
-	public Preferences(DietType dietType, int minCalories, int maxCalories, User user) {
+	public Preferences(int id, DietType dietType, int minCalories, int maxCalories) {
+		super();
+		this.id = id;
+		this.dietType = dietType;
+		this.minCalories = minCalories;
+		this.maxCalories = maxCalories;
+	}
+
+	public Preferences(DietType dietType, int minCalories, int maxCalories) {
 		super();
 		this.dietType = dietType;
 		this.minCalories = minCalories;
 		this.maxCalories = maxCalories;
-		this.user = user;
 	}
 
 	@Override
@@ -41,9 +49,9 @@ public class Preferences {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dietType == null) ? 0 : dietType.hashCode());
+		result = prime * result + id;
 		result = prime * result + maxCalories;
 		result = prime * result + minCalories;
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -58,22 +66,27 @@ public class Preferences {
 		Preferences other = (Preferences) obj;
 		if (dietType != other.dietType)
 			return false;
+		if (id != other.id)
+			return false;
 		if (maxCalories != other.maxCalories)
 			return false;
 		if (minCalories != other.minCalories)
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Preferences [dietType=" + dietType + ", minCalories=" + minCalories + ", maxCalories=" + maxCalories
-				+ ", user=" + user + "]";
+		return "Preferences [id=" + id + ", dietType=" + dietType + ", minCalories=" + minCalories + ", maxCalories="
+				+ maxCalories + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public DietType getDietType() {
@@ -100,13 +113,5 @@ public class Preferences {
 		this.maxCalories = maxCalories;
 	}
 
-	public User getUser() {
-		return user;
-	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	
 }

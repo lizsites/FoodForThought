@@ -28,7 +28,10 @@ public class Recipe {
 	@Column(name="recipe_cals")
 	private int cals;
 	
-	@OneToMany(mappedBy="recipe_id", cascade = CascadeType.ALL)
+	@Column(name="recipe_title", nullable=false)
+	String title;
+	
+	@OneToMany(mappedBy="recipe", cascade = CascadeType.ALL)
 	private List<RecipeIngredient> recipeIngredient;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -74,9 +77,6 @@ public class Recipe {
 			return false;
 		return true;
 	}
-
-	@Column(name="recipe_title", nullable=false)
-	String title;
 	
 	public int getId() {
 		return id;
@@ -109,4 +109,12 @@ public class Recipe {
 	public void setCals(int cals) {
 		this.cals = cals;
 	}
+
+	@Override
+	public String toString() {
+		return "Recipe [id=" + id + ", body=" + body + ", cals=" + cals + ", recipeIngredient=" + recipeIngredient
+				+ ", owner=" + owner + ", title=" + title + "]";
+	}
+	
+	
 }

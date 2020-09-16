@@ -10,73 +10,118 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int id;
-	
-	@Column(name="user_name" , unique = true)
+
+	@Column(name = "user_name", unique = true)
 	private String username;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
 
-	@Column(name="min_calories")
-	private int minCalories;
-	
-	@Column(name="max_calories")
-	private int maxCalories;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="owner", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Recipe> recipes;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Picture> pictures;
 	
-	@Enumerated(EnumType.STRING)
-	private Diet diet;
-	
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
-	List<Picture> pictures;
-	public User(int id, String username, String password, int minCalories, int maxCalories, Diet diet) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.minCalories = minCalories;
-		this.maxCalories = maxCalories;
-		this.diet = diet;
-	}	
-
-	public User(String username, String password, int minCalories, int maxCalories, Diet diet) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.minCalories = minCalories;
-		this.maxCalories = maxCalories;
-		this.diet = diet;
-	}
-
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "preference_id", nullable =false)
+	private Preferences preference;
 
 	public User() {
 		super();
 	}
 
-
-
-	public String getPassword() {
-		return password;
+	public User(int id, String username, String password, List<Recipe> recipes, List<Picture> pictures,
+			Preferences preference) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.recipes = recipes;
+		this.pictures = pictures;
+		this.preference = preference;
 	}
 
-	public void setPassword(String password) {
+	public User(String username, String password, List<Recipe> recipes, List<Picture> pictures,
+			Preferences preference) {
+		super();
+		this.username = username;
 		this.password = password;
+		this.recipes = recipes;
+		this.pictures = pictures;
+		this.preference = preference;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((pictures == null) ? 0 : pictures.hashCode());
+		result = prime * result + ((preference == null) ? 0 : preference.hashCode());
+		result = prime * result + ((recipes == null) ? 0 : recipes.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (pictures == null) {
+			if (other.pictures != null)
+				return false;
+		} else if (!pictures.equals(other.pictures))
+			return false;
+		if (preference == null) {
+			if (other.preference != null)
+				return false;
+		} else if (!preference.equals(other.preference))
+			return false;
+		if (recipes == null) {
+			if (other.recipes != null)
+				return false;
+		} else if (!recipes.equals(other.recipes))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", recipes=" + recipes
+				+ ", pictures=" + pictures + ", preference=" + preference + "]";
 	}
 
 	public int getId() {
@@ -95,64 +140,37 @@ public class User {
 		this.username = username;
 	}
 
-	public int getMinCalories() {
-		return minCalories;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setMinCalories(int minCalories) {
-		this.minCalories = minCalories;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public int getMaxCalories() {
-		return maxCalories;
+	public List<Recipe> getRecipes() {
+		return recipes;
 	}
 
-	public void setMaxCalories(int maxCalories) {
-		this.maxCalories = maxCalories;
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
 	}
 
-	public Diet getDiet() {
-		return diet;
+	public List<Picture> getPictures() {
+		return pictures;
 	}
 
-	public void setDiet(Diet diet) {
-		this.diet = diet;
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
+	}
+
+	public Preferences getPreference() {
+		return preference;
+	}
+
+	public void setPreference(Preferences preference) {
+		this.preference = preference;
 	}
 	
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", minCalories=" + minCalories
-				+ ", MaxCalories=" + maxCalories + ", diet=" + diet + "]";
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (this.maxCalories != other.maxCalories)
-			return false;
-		if (diet != other.diet)
-			return false;
-		if (id != other.id)
-			return false;
-		if (minCalories != other.minCalories)
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
 	}
-	
-}

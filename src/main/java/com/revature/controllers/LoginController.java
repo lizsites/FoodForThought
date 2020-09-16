@@ -87,9 +87,6 @@ public class LoginController {
 			User u = (User)sess.getAttribute("user");
 			System.out.println("user info from session : " + u);
 			u.setPassword(newU.getPassword());
-			u.setDiet(newU.getDiet());
-			u.setMinCalories(newU.getMinCalories());
-			u.setMaxCalories(newU.getMaxCalories());
 			if (ls.updateUser(u)) {
 				res.setStatus(200);
 				res.getWriter().println(u);

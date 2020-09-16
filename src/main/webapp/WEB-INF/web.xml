@@ -24,12 +24,16 @@
 	</filter-mapping>
 	
 	<servlet>
-		<display-name>TestServlet</display-name>
-		<servlet-name>TestServlet</servlet-name>
-		<servlet-class>com.revature.web.TestServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>TestServlet</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping> 
-</web-app>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>/WEB-INF/dispatcherContext.xml</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  </web-app>

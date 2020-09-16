@@ -4,7 +4,7 @@ import org.hibernate.Session;
 
 import com.revature.dao.UserDAO;
 import com.revature.dao.UserDAOImp;
-import com.revature.models.Diet;
+import com.revature.models.Preferences;
 import com.revature.models.User;
 import com.revature.utilities.HibernateUtil;
 

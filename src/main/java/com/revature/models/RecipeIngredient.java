@@ -53,7 +53,6 @@ public class RecipeIngredient {
 	}
 
 
-
 	public RecipeIngredient(String amount) {
 		super();
 		this.amount = amount;

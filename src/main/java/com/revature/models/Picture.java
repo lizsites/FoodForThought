@@ -1,6 +1,6 @@
 package com.revature.models;
 
-import java.sql.Blob;
+//import java.sql.Blob;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,8 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+//import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="pictures")
@@ -21,28 +24,28 @@ public class Picture {
 	@Column(name="picture_id")
 	private int id;
 	
-	@Column(name="picture")
-	private Blob picture;
+	//@Lob
+	@Type(type = "org.hibernate.type.BinaryType")
+	@Column(name = "picture")
+	private byte imageAsBytea[];
 	
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private User user;
 
-	public Picture(int id, Blob picture, User user) {
+	public Picture(int id, byte[] image, User user) {
 		super();
 		this.id = id;
-		this.picture = picture;
+		this.imageAsBytea = image;
 		this.user = user;
 	}
 
-	public Picture(Blob picture, User user) {
+	public Picture(byte[] image, User user) {
 		super();
-		this.picture = picture;
+		this.imageAsBytea = image;
 		this.user = user;
 	}
 	
-	
-
 	public Picture() {
 		super();
 	}
@@ -55,12 +58,12 @@ public class Picture {
 		this.id = id;
 	}
 
-	public Blob getPicture() {
-		return picture;
+	public byte[] getPicture() {
+		return imageAsBytea;
 	}
 
-	public void setPicture(Blob picture) {
-		this.picture = picture;
+	public void setPicture(byte[] image) {
+		this.imageAsBytea = image;
 	}
 
 	public User getUser() {
@@ -73,7 +76,7 @@ public class Picture {
 
 	@Override
 	public String toString() {
-		return "Picture [id=" + id + ", picture=" + picture + ", user=" + user + "]";
+		return "Picture [id=" + id + ", picture=" + imageAsBytea + ", user=" + user + "]";
 	}	
 	
 	

@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "preferences")
 public class Preferences {
+	
+	//what other fields do we want in our preferences???
 
 	public enum DietType {
 		GLUTEN_FREE, VEGAN, VEGETARIAN, LACTO_VEGETARIAN, KETOGENIC, OVO_VEGETARIAN, PESCETARIAN, PALEO, PRIMAL, WHOLE30

@@ -14,14 +14,16 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		<property name="hibernate.show_sql">false</property>
 		<property name="hibernate.format_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 		<property name="hibernate.event.merge.entity_copy_observer">allow</property>
 		
 		<mapping class="com.revature.models.User"/>
+		<mapping class="com.revature.models.Preferences"/>
 		<mapping class="com.revature.models.Recipe"/>
 		<mapping class="com.revature.models.Picture"/>
 		<mapping class="com.revature.models.Ingredient"/>
 		<mapping class="com.revature.models.RecipeIngredient"/>
+
 	</session-factory>
 	
 

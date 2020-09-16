@@ -28,7 +28,6 @@ public class Preferences {
 	private int maxCalories;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	//dont need a join table because its okay for one preference to be associated with multiple users?
 	private List<User> users;
 
 	public Preferences() {

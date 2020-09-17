@@ -31,27 +31,57 @@ public class Recipe {
 	@Column(name="recipe_title", nullable=false)
 	String title;
 	
-	@OneToMany(mappedBy="recipe", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="recipe", fetch = FetchType.EAGER)
 	private List<RecipeIngredient> recipeIngredient;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private User owner;
 	
-	public Recipe(String title, String body, int cals) {
+	@OneToMany(mappedBy="steps", fetch = FetchType.EAGER)
+	private List<Steps> step;
+
+	public Recipe() {
 		super();
-		this.title = title;
-		this.body = body;
-		this.cals = cals;
 	}
 
-	public Recipe(int id, String title, String body, int cals) {
+	public Recipe(int id, String body, int cals, String title, List<RecipeIngredient> recipeIngredient, User owner,
+			List<Steps> step) {
 		super();
 		this.id = id;
-		this.title = title;
 		this.body = body;
 		this.cals = cals;
+		this.title = title;
+		this.recipeIngredient = recipeIngredient;
+		this.owner = owner;
+		this.step = step;
 	}
+
+	public Recipe(String body, int cals, String title, List<RecipeIngredient> recipeIngredient, User owner,
+			List<Steps> step) {
+		super();
+		this.body = body;
+		this.cals = cals;
+		this.title = title;
+		this.recipeIngredient = recipeIngredient;
+		this.owner = owner;
+		this.step = step;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((body == null) ? 0 : body.hashCode());
+		result = prime * result + cals;
+		result = prime * result + id;
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result + ((recipeIngredient == null) ? 0 : recipeIngredient.hashCode());
+		result = prime * result + ((step == null) ? 0 : step.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -70,6 +100,21 @@ public class Recipe {
 			return false;
 		if (id != other.id)
 			return false;
+		if (owner == null) {
+			if (other.owner != null)
+				return false;
+		} else if (!owner.equals(other.owner))
+			return false;
+		if (recipeIngredient == null) {
+			if (other.recipeIngredient != null)
+				return false;
+		} else if (!recipeIngredient.equals(other.recipeIngredient))
+			return false;
+		if (step == null) {
+			if (other.step != null)
+				return false;
+		} else if (!step.equals(other.step))
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -77,21 +122,19 @@ public class Recipe {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Recipe [id=" + id + ", body=" + body + ", cals=" + cals + ", title=" + title + ", recipeIngredient="
+				+ recipeIngredient + ", owner=" + owner + ", step=" + step + "]";
+	}
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getBody() {
@@ -110,11 +153,36 @@ public class Recipe {
 		this.cals = cals;
 	}
 
-	@Override
-	public String toString() {
-		return "Recipe [id=" + id + ", body=" + body + ", cals=" + cals + ", recipeIngredient=" + recipeIngredient
-				+ ", owner=" + owner + ", title=" + title + "]";
+	public String getTitle() {
+		return title;
 	}
-	
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public List<RecipeIngredient> getRecipeIngredient() {
+		return recipeIngredient;
+	}
+
+	public void setRecipeIngredient(List<RecipeIngredient> recipeIngredient) {
+		this.recipeIngredient = recipeIngredient;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public List<Steps> getStep() {
+		return step;
+	}
+
+	public void setStep(List<Steps> step) {
+		this.step = step;
+	}
 	
 }

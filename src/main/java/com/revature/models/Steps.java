@@ -20,7 +20,7 @@ public class Steps {
 		@Column(name="steps_id")
 		private int id;
 		
-		@Column(name = "step")
+		@Column(name = "body")
 		private String body;
 		
 		@Column(name ="order")

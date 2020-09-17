@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dao.UserDAO;
 import com.revature.dao.UserDAOImp;
@@ -15,26 +20,14 @@ import com.revature.models.User;
 
 import com.revature.services.LoginService;
 
+@Controller
+@RequestMapping(path="/login")
+@ResponseBody
 public class LoginController {
 	
-	
-	public void login(HttpServletRequest req, HttpServletResponse res) throws IOException{
+	@PostMapping
+	public void login() {
 		
-		ObjectMapper om = new ObjectMapper();
-		LoginService ls = new LoginService();
-		BufferedReader reader = req.getReader();
-
-		StringBuilder sb = new StringBuilder();
-
-		String line = reader.readLine();
-
-		while (line != null) {
-			sb.append(line);
-			line = reader.readLine();
-		}
-
-		String body = new String(sb);
-		User u = om.readValue(body, User.class);
 		
 		if (ls.login(u)) {
 			
@@ -44,11 +37,7 @@ public class LoginController {
 			u = f;
 			sesh.setAttribute("user", u);
 			sesh.setAttribute("loggedin" , true);
-			String jsonU = om.writeValueAsString(u);
 			
-			res.getWriter().println(jsonU);
-			
-			res.setStatus(200);
 			
 	}
 }

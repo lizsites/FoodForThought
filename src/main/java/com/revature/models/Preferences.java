@@ -1,7 +1,5 @@
 package com.revature.models;
 
-import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -29,8 +27,8 @@ public class Preferences {
 	@Column(name = "max_calories")
 	private int maxCalories;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "preference", cascade = CascadeType.ALL)
-	private List<User> users;
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "preference", cascade = CascadeType.ALL)
+	private User users;
 
 	public Preferences() {
 		super();

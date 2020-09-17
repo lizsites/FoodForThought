@@ -31,15 +31,15 @@ public class Recipe {
 	@Column(name="recipe_title", nullable=false)
 	String title;
 	
-	@OneToMany(mappedBy="recipe", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="recipe", fetch = FetchType.LAZY)
 	private List<RecipeIngredient> recipeIngredient;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private User owner;
 	
-	@OneToMany(mappedBy="steps", fetch = FetchType.EAGER)
-	private List<Steps> step;
+	@OneToMany(mappedBy="recipe", fetch = FetchType.LAZY)
+	private List<Steps> recipeSteps;
 
 	public Recipe() {
 		super();
@@ -54,7 +54,7 @@ public class Recipe {
 		this.title = title;
 		this.recipeIngredient = recipeIngredient;
 		this.owner = owner;
-		this.step = step;
+		this.recipeSteps = step;
 	}
 
 	public Recipe(String body, int cals, String title, List<RecipeIngredient> recipeIngredient, User owner,
@@ -65,7 +65,7 @@ public class Recipe {
 		this.title = title;
 		this.recipeIngredient = recipeIngredient;
 		this.owner = owner;
-		this.step = step;
+		this.recipeSteps = step;
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class Recipe {
 		result = prime * result + id;
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		result = prime * result + ((recipeIngredient == null) ? 0 : recipeIngredient.hashCode());
-		result = prime * result + ((step == null) ? 0 : step.hashCode());
+		result = prime * result + ((recipeSteps == null) ? 0 : recipeSteps.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -110,10 +110,10 @@ public class Recipe {
 				return false;
 		} else if (!recipeIngredient.equals(other.recipeIngredient))
 			return false;
-		if (step == null) {
-			if (other.step != null)
+		if (recipeSteps == null) {
+			if (other.recipeSteps != null)
 				return false;
-		} else if (!step.equals(other.step))
+		} else if (!recipeSteps.equals(other.recipeSteps))
 			return false;
 		if (title == null) {
 			if (other.title != null)
@@ -126,7 +126,7 @@ public class Recipe {
 	@Override
 	public String toString() {
 		return "Recipe [id=" + id + ", body=" + body + ", cals=" + cals + ", title=" + title + ", recipeIngredient="
-				+ recipeIngredient + ", owner=" + owner + ", step=" + step + "]";
+				+ recipeIngredient + ", owner=" + owner + ", steps=" + recipeSteps.size() + "]";
 	}
 
 	public int getId() {
@@ -177,12 +177,12 @@ public class Recipe {
 		this.owner = owner;
 	}
 
-	public List<Steps> getStep() {
-		return step;
+	public List<Steps> getRecipeStep() {
+		return recipeSteps;
 	}
 
-	public void setStep(List<Steps> step) {
-		this.step = step;
+	public void setRecipeStep(List<Steps> step) {
+		this.recipeSteps = step;
 	}
 	
 }

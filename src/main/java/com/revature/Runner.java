@@ -8,9 +8,12 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.hibernate.Session;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.revature.dao.PreferencesDAO;
 import com.revature.dao.PreferencesDAOImp;
+import com.revature.dao.StepsDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dao.UserDAOImp;
 import com.revature.models.Ingredient;
@@ -27,23 +30,24 @@ public class Runner {
 
 	public static void main(String[] args) {
 		
-		
-		UserDAO userDAO = new UserDAOImp();
-		PreferencesDAO prefDAO= new PreferencesDAOImp();
-		
-//		System.out.println(userDAO.getUserByUsername("betty1"));
-		
+		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		UserDAO userDAO = ac.getBean(UserDAO.class);
+		PreferencesDAO prefDAO = ac.getBean(PreferencesDAO.class);
+		StepsDAO stepDAO = ac.getBean(StepsDAO.class);
 		
 		List<Recipe> userList = new ArrayList<Recipe>();
 		Recipe water = new Recipe("water",0,"water recipe", null, null, null);
 		List<Steps> waterStep = new ArrayList<Steps>();
 		Steps step = new Steps("add water",1,water);
+		stepDAO.addStep(step);
 		waterStep.add(step);
 		userList.add(water);
 		water.setRecipeStep(waterStep);
 		User user1= new User("livray", hash("soccer"), userList, new ArrayList<Picture>(), new Preferences (DietType.GLUTEN_FREE, 0, 100));
+		User user2= new User("nlang", hash("82798"), userList, new ArrayList<Picture>(), new Preferences (DietType.PALEO, 0, 100));
 		user1.setRecipes(userList);
 		userDAO.addUser(user1);
+		userDAO.addUser(user2);
 		System.out.println(user1);
 		
 //		public Recipe(String body, int cals, String title, List<RecipeIngredient> recipeIngredient, User owner,

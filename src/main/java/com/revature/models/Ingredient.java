@@ -84,7 +84,5 @@ public class Ingredient {
 		return "Ingredient [id=" + id + ", name=" + name + ", cals=" + cals
 				+ "]";
 	}
-	
-	
 
 }

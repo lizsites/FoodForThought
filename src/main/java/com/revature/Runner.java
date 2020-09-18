@@ -30,6 +30,7 @@ public class Runner {
 		User user1= new User("livray", hash("soccer"), null, null, new Preferences (DietType.GLUTEN_FREE, 0, 100));
 		userDAO.addUser(user1);
 		System.out.println(user1);
+		System.out.println(user1);
 	
 }
 	//password hashing for when creating users in java

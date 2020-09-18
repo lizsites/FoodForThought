@@ -23,6 +23,7 @@
 		<mapping class="com.revature.models.Picture"/>
 		<mapping class="com.revature.models.Ingredient"/>
 		<mapping class="com.revature.models.RecipeIngredient"/>
+		<mapping class="com.revature.models.Steps"/>
 
 	</session-factory>
 	

@@ -1,72 +1,59 @@
 package com.revature.dao;
 
-import java.util.List;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.models.User;
-import com.revature.utilities.HibernateUtil;
 
+@Repository
+@Transactional
 public class UserDAOImp implements UserDAO {
 
+	private SessionFactory sf;
+	
+	@Autowired
+	public UserDAOImp(SessionFactory sf) {
+		super();
+		this.sf = sf;
+	}
+	
 	@Override
 	public boolean addUser(User u) {
-		Session sess = HibernateUtil.getSession();
-		Transaction tx;
-
-		tx = sess.beginTransaction();
-		try {
+		Session sess = sf.getCurrentSession();
+		if(u!=null) {
 			sess.save(u);
-			tx.commit();
 			return true;
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			tx.rollback();
+		}else
 			return false;
-		} 
 		
 	}
 	@Override
 	public boolean updateUser(User u) {
-		Session sess = HibernateUtil.getSession();
-		Transaction tx;
-		tx = sess.beginTransaction();
-		try {
-			
-			sess.merge(u);
-			tx.commit();
+		Session sess = sf.getCurrentSession();
+		if(u!=null) {
+			sess.update(u);
 			return true;
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			tx.rollback();
-			return false;
-		} 
+		}else
+			return false;		
 	}
 	
 	@Override
 	public User getUserById(int id) {
-		Session sess = HibernateUtil.getSession();
-		try {
-			return sess.get(User.class, id);
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			return null;
-		}
+		Session sess = sf.getCurrentSession();
+		return sess.get(User.class, id);
+		
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByUsername(String username) {
-		Session sess = HibernateUtil.getSession();
-		try {
-			List<User> u;
-			u = sess.createQuery("FROM User WHERE username = '"+username + "'").list();
-			return u.get(0);
-		}catch (HibernateException e) {
-			e.printStackTrace();
-			return null;
-		}
+		Session sess = sf.getCurrentSession();
+		Query<User> q = sess.createQuery("FROM user WHERE user.username = :un");
+		q.setParameter("un", username);
+		return q.getSingleResult();
 	}
 
 }

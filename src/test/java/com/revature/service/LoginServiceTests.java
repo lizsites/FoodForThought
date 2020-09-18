@@ -10,7 +10,7 @@ import com.revature.services.LoginService;
 
 public class LoginServiceTests {
 	
-	public static LoginService ls = new LoginService();
+//	public static LoginService ls = new LoginService();
 	public static User u = new User();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

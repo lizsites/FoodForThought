@@ -8,6 +8,8 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.hibernate.Session;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.revature.dao.PreferencesDAO;
 import com.revature.dao.PreferencesDAOImp;
@@ -27,12 +29,9 @@ public class Runner {
 
 	public static void main(String[] args) {
 		
-		
-		UserDAO userDAO = new UserDAOImp();
-		PreferencesDAO prefDAO= new PreferencesDAOImp();
-		
-//		System.out.println(userDAO.getUserByUsername("betty1"));
-		
+		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		UserDAO userDAO = ac.getBean(UserDAO.class);
+		PreferencesDAO prefDAO = ac.getBean(PreferencesDAO.class);
 		
 		List<Recipe> userList = new ArrayList<Recipe>();
 		Recipe water = new Recipe("water",0,"water recipe", null, null, null);

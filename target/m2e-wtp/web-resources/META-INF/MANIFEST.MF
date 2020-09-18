@@ -1,7 +1,5 @@
 Manifest-Version: 1.0
-
-Built-By: hazelblanchard
-Build-Jdk: 14.0.1
-
+Built-By: Nicole Lang
+Build-Jdk: 1.8.0_261
 Created-By: Maven Integration for Eclipse
 

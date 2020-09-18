@@ -77,7 +77,4 @@ public class RecipeDAOImp implements RecipeDAO {
 		q.setParameter("id", id);
 		return q.list();
 	}
-	
-	
-
 }
